@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Hexo教程]]></title>
-    <url>%2F2017%2F06%2F10%2FHexo%E6%95%99%E7%A8%8B%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[在GitHub上面搭建Hexo博客教程]]></title>
+    <url>%2F2017%2F06%2F10%2F%E5%9C%A8GitHub%E4%B8%8A%E9%9D%A2%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[什么是HexoHexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在Github和Heroku上。并且有很多人为其制作了很多优秀的主题（theme），你可以根据自己的喜好进行设置。主题的设置将在后面的章节中介绍。 这个是Hexo官方网站介绍： Hexo is a fast, simple and powerful blog framework. You write posts in Markdown (or other languages) and Hexo generates static files with a beautiful theme in seconds. 翻译过来就是： Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。 怎么在Github上搭建一个hexo博客我用了一天时间研究和搭建了一个Github博客(GitHub Pages site)，过程中遇到一些小问题，现在写一篇教程，方便和我一样爱折腾但是是新手的人。 安装Git前往Git官网下载Windows版本压缩包，Git-2.13.0-64-bit.exe，下载完成后解压安装。 安装Node.js前往Node.js官方下载网站，下载Node.js官方安装包，v6.10.3 LTS，下载完成后同样解压安装。 正式安装Hexo Node和Git都安装好后,首先创建一个文件夹,如Hexo,用户存放hexo的配置文件,然后进入Hexo里安装Hexo。 12mkdir /d/git/hexocd /d/git/hexo 执行如下命令安装Hexo： 1sudo npm install -g hexo 初始化然后，执行init命令初始化hexo,命令： 1hexo init 好啦，至此，全部安装工作已经完成！hexo就是你的博客根目录，所有的操作都在里面进行。 生成静态页面 1hexo generate（hexo g也可以） 本地启动 启动本地服务，进行文章预览调试，命令： 1hexo server （hexo s也可以） 浏览器输入http://localhost:4000我不知道你们能不能，反正我不能，因为我还有环境没配置好 后来换了端口 1hexo s -p 2000 添加ssh key到Github 检查SSH keys是否存在Github 执行如下命令，检查SSH keys是否存在。如果有文件id_rsa.pub或id_dsa.pub，则直接将SSH key添加到Github中，否则进入下一步生成SSH key。 1$ ls -al ~/.ssh 生成新的ssh key 执行如下命令生成public/private rsa key pair，注意将your_email@example.com换成你自己注册Github的邮箱地址。 1$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot; 默认会在相应路径下（~/.ssh/id_rsa.pub）生成id_rsa和id_rsa.pub两个文件。 将ssh key添加到Github中 Find前往文件夹~/.ssh/id_rsa.pub打开id_rsa.pub文件，里面的信息即为SSH key，将这些信息复制到Github的Add SSH key页面即可。 进入Github –&gt; Settings –&gt; SSH keys –&gt; add SSH key: Title里任意添一个标题，将复制的内容粘贴到Key里，点击下方Add key绿色按钮即可。 配置hexo和GitHub 建立Repository 建立与你用户名对应的仓库，仓库名必须为【your_user_name.github.io】，固定写法 然后建立关联，我的hexo在本地/D/git/hexo，hexo是我之前建的东西也全在这里面，有： 1234567_config.yml db.jsonnode_modulespackage.jsonscaffoldssourcethemes 现在我们需要_config.yml文件，来建立关联，命令： 1vim _config.yml 翻到最下面，改成我这样子的 1234deploy: type: git repo: https://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git branch: master 然后执行命令： 1npm install hexo-deployer-git --save 网上会有很多说法，有的type是github, 还有repository最后面的后缀也不一样，是github.com.git，我也踩了很多坑，我现在的版本是hexo: 3.1.1，执行命令hexo -vsersion就出来了,貌似3.0后全部改成我上面这种格式了。 然后，执行配置命令： 1hexo deploy 然后再浏览器中输入http://username.github.io/ 就行了，我的github的账户叫walt740,把这个改成你github的账户名就行了 部署步骤 每次部署的步骤，可按以下三步来进行。 123hexo cleanhexo generatehexo deploy 一些常用命令： 12345678910111213hexo new&quot;postName&quot; #新建文章hexo new page&quot;pageName&quot; #新建页面hexo generate #生成静态页面至public目录hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）hexo deploy #将.deploy目录部署到GitHubhexo help # 查看帮助hexo version #查看Hexo的版本]]></content>
       <categories>
         <category>Hexo教程</category>
       </categories>
       <tags>
-        <tag>-Hexo</tag>
+        <tag>Hexo,GitHub</tag>
       </tags>
   </entry>
   <entry>
