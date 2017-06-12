@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/10/在GitHub上面搭建Hexo博客教程/index.html">
 <meta property="og:site_name" content="BinBinStory&#39;s Notes">
 <meta property="og:description" content="什么是HexoHexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在Github和Heroku上。并且有很多人为其制作了很多优秀的主题（theme），你可以根据自己的喜好进行设置。主题的设置将在后面的章节中介绍。 这个是Hexo官方网站介绍：  Hexo is a fast, simple and powerful blog framework. You write post">
-<meta property="og:updated_time" content="2017-06-12T17:05:16.923Z">
+<meta property="og:updated_time" content="2017-06-12T17:42:34.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在GitHub上面搭建Hexo博客教程">
 <meta name="twitter:description" content="什么是HexoHexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在Github和Heroku上。并且有很多人为其制作了很多优秀的主题（theme），你可以根据自己的喜好进行设置。主题的设置将在后面的章节中介绍。 这个是Hexo官方网站介绍：  Hexo is a fast, simple and powerful blog framework. You write post">
@@ -529,6 +529,26 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">hexo new&quot;postName&quot; #新建文章</div><div class="line"></div><div class="line">hexo new page&quot;pageName&quot; #新建页面</div><div class="line"></div><div class="line">hexo generate #生成静态页面至public目录</div><div class="line"></div><div class="line">hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line"></div><div class="line">hexo deploy #将.deploy目录部署到GitHub</div><div class="line"></div><div class="line">hexo help # 查看帮助</div><div class="line"></div><div class="line">hexo version #查看Hexo的版本</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<h3 id="优化部署与管理"><a href="#优化部署与管理" class="headerlink" title="优化部署与管理"></a>优化部署与管理</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>Hexo部署到GitHub上的文件，是.md（你的博文）转化之后的.html（静态网页）。因此，当你重装电脑或者想在不同电脑上修改博客时，就不可能了（除非你自己写html o(^▽^)o ）。<br>其实，Hexo生成的网站文件中有.gitignore文件，因此它的本意也是想我们将Hexo生成的网站文件存放到GitHub上进行管理的（而不是用U盘或者云备份啦(╬▔皿▔)凸）。这样，不仅解决了上述的问题，还可以通过git的版本控制追踪你的博文的修改过程，是极赞的。<br>但是，如果每一个GitHub Pages都需要创建一个额外的仓库来存放Hexo网站文件，我感觉很麻烦（10个项目需要20个仓库(ˉ▽ˉ；)…）。<br>所以，我利用了分支！！！<br>简单地说，每个想建立GitHub Pages的仓库，起码有两个分支，一个用来存放Hexo网站的文件，一个用来发布网站。</p>
+<h4 id="下面以我的博客作为例子详细地讲述。"><a href="#下面以我的博客作为例子详细地讲述。" class="headerlink" title="下面以我的博客作为例子详细地讲述。"></a>下面以我的博客作为例子详细地讲述。</h4><p>我的博客搭建流程</p>
+<ul>
+<li><p>创建仓库，walt740.github.io；</p>
+<p>创建两个分支：master 与 hexo；</p>
+</li>
+<li><p>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；</p>
+<p>使用git clone git@github.com:walt740/walt740.github.io.git拷贝仓库；</p>
+</li>
+<li><p>在本地walt740.github.io文件夹下通过Git bash依次执行<br>npm install hexo、hexo init、npm install 和 npm install hexo-deployer-git（此时当前分支应显示为hexo）;</p>
+</li>
+<li><p>修改_config.yml中的deploy参数，分支应为master；<br>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；</p>
+</li>
+<li><p>执行hexo generate -d生成网站并部署到GitHub上。<br>这样一来，在GitHub上的walt740.github.io仓库就有两个分支，一个hexo分支用来存放网站的原始文件，一个master分支用来存放生成的静态网页。完美( •̀ ω •́ )y！</p>
+<h4 id="我的博客管理流程"><a href="#我的博客管理流程" class="headerlink" title="我的博客管理流程"></a>我的博客管理流程</h4></li>
+<li><p>日常修改<br>在本地对博客进行修改（添加新博文、修改样式等等）后，通过下面的流程进行管理：<br>依次执行git add .、git commit -m “…”、git push origin hexo指令将改动推送到GitHub（此时当前分支应为hexo）；<br>然后才执行hexo generate -d发布网站到master分支上。<br>虽然两个过程顺序调转一般不会有问题，不过逻辑上这样的顺序是绝对没问题的（例如突然死机要重装了，悲催….的情况，调转顺序就有问题了）。</p>
+</li>
+<li><p>本地资料丢失<br>当重装电脑之后，或者想在其他电脑上修改博客，可以使用下列步骤：<br>使用git clone git@github.com:walt740/walt740.github.io.git拷贝仓库（默认分支为hexo）；<br>在本地新拷贝的walt740.github.io文件夹下通过Git bash依次执行下列指令：npm install hexo、npm install、npm install hexo-deployer-git（记得，不需要hexo init这条指令）。</p>
+</li>
+</ul>
 
       
     </div>
@@ -726,7 +746,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Hexo"><span class="nav-number">1.</span> <span class="nav-text">什么是Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么在Github上搭建一个hexo博客"><span class="nav-number">2.</span> <span class="nav-text">怎么在Github上搭建一个hexo博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Git"><span class="nav-number">2.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Node-js"><span class="nav-number">2.2.</span> <span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式安装Hexo"><span class="nav-number">2.3.</span> <span class="nav-text">正式安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加ssh-key到Github"><span class="nav-number">2.4.</span> <span class="nav-text">添加ssh key到Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置hexo和GitHub"><span class="nav-number">2.5.</span> <span class="nav-text">配置hexo和GitHub</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Hexo"><span class="nav-number">1.</span> <span class="nav-text">什么是Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么在Github上搭建一个hexo博客"><span class="nav-number">2.</span> <span class="nav-text">怎么在Github上搭建一个hexo博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Git"><span class="nav-number">2.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Node-js"><span class="nav-number">2.2.</span> <span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式安装Hexo"><span class="nav-number">2.3.</span> <span class="nav-text">正式安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加ssh-key到Github"><span class="nav-number">2.4.</span> <span class="nav-text">添加ssh key到Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置hexo和GitHub"><span class="nav-number">2.5.</span> <span class="nav-text">配置hexo和GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化部署与管理"><span class="nav-number">2.6.</span> <span class="nav-text">优化部署与管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概述"><span class="nav-number">2.6.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下面以我的博客作为例子详细地讲述。"><span class="nav-number">2.6.2.</span> <span class="nav-text">下面以我的博客作为例子详细地讲述。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我的博客管理流程"><span class="nav-number">2.6.3.</span> <span class="nav-text">我的博客管理流程</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
